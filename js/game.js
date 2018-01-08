@@ -1,5 +1,21 @@
 window.addEvent('domready', function(){
+    //new Welcome();
     new Genius();
+});
+
+Welcome = new Class({
+    Implements: Options,
+    options: {
+
+    },
+
+    initialize: function(options) {
+        this.setOptions(options);
+    },
+
+    setElements: function(){
+        new Element('h2')
+    }
 });
 
 Genius = new Class({
