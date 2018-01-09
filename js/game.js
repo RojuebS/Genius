@@ -33,6 +33,7 @@ Genius = new Class({
         this.round = 0;
         this.currentSequencia = [];
         this.randomSequence = [];
+        this.error = false;
     },
 
     random: function(){
@@ -56,24 +57,20 @@ Genius = new Class({
         $('sequence').addEvent('keyup', function(ev){
             if(ev.key.match(/^([0-9])$/)) {
                 this.currentSequencia.push(ev.key);
-                console.log(this.currentSequencia);
             }
         }.bind(this));
     },
 
     check: function(){
-        let error = false;
         for(let a = 0; a < this.randomSequence.length; a++) {
             if(this.randomSequence[a] === this.currentSequencia[a]){
-                error = false;
+                this.error = false;
             }else{
-                error = true;
+                this.gameOver();
+                return false;
             }
         }
 
-        if(error === true){
-            this.gameOver();
-        }
         this.clear();
     },
 
