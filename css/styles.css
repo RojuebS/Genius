@@ -4,37 +4,5 @@
 }
 
 body {
-
-}
-
-#main {
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.block {
-    width: calc(50% - 4px);
-    height: 50%;
-    float: left;
-    border: 2px solid black;
-}
-
-.block.vermelho {
-    background: red;
-    border-bottom-left-radius: 150px;
-}
-
-.block.verde {
-    background: green;
-    border-bottom-right-radius: 150px;
-}
-
-.block.azul {
-    background: blue;
-    border-top-left-radius: 150px;
-}
-
-.block.amarelo {
-    background: yellow;
-    border-top-right-radius: 150px;
+    background: url('/images/background.png') no-repeat top center;
 }

@@ -1,6 +1,6 @@
 window.addEvent('domready', function(){
-    //new Welcome();
-    new Genius();
+    new Welcome();
+    //new Genius();
 });
 
 Welcome = new Class({
@@ -11,10 +11,17 @@ Welcome = new Class({
 
     initialize: function(options) {
         this.setOptions(options);
+        this.setElements();
     },
 
     setElements: function(){
-        new Element('h2')
+        this.hello = new Element('div', {
+            'class': 'hello',
+            'styles': {
+                'background': 'url(/images/tapete.png)'
+            }
+        });
+        this.hello.inject($$('main')[0]);
     }
 });
 
