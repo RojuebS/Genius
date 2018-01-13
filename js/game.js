@@ -21,14 +21,14 @@ Welcome = new Class({
         this.hello = new Element('div', {
             'class': 'hello',
             'styles': {
-                'background': 'url(../images/pergaminho.png) no-repeat'
+                'background': 'url(images/pergaminho.png) no-repeat'
             }
         }).adopt(
             new Element('div', {
                 'class': 'play'
             }).adopt(
                 new Element('img', {
-                    'src': '../images/play.png'
+                    'src': 'images/play.png'
                 })
             )
         );

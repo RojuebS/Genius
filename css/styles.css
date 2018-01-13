@@ -4,7 +4,7 @@
 }
 
 body {
-    background: url('/images/Agrabah.jpg') no-repeat top center;
+    background: url('../images/Agrabah.jpg') no-repeat top center;
     height: 100%;
     background-size: cover
 }
