@@ -12,16 +12,30 @@ Welcome = new Class({
     initialize: function(options) {
         this.setOptions(options);
         this.setElements();
+        setTimeout(function(){
+            this.effect();
+        }.bind(this), 1000)
     },
 
     setElements: function(){
         this.hello = new Element('div', {
             'class': 'hello',
             'styles': {
-                'background': 'url(/images/tapete.png)'
+                'background': 'url(../images/pergaminho.png) no-repeat'
             }
-        });
-        this.hello.inject($$('main')[0]);
+        }).adopt(
+            new Element('div', {
+                'class': 'play'
+            }).adopt(
+                new Element('img', {
+                    'src': '../images/play.png'
+                })
+            )
+        );
+        this.hello.inject($$('body')[0]);
+    },
+    effect: function(){
+        this.hello.addClass('active');
     }
 });
 
