@@ -1,7 +1,14 @@
-window.addEvent('domready', function(){
-    new Welcome();
-    //new Genius();
+window.addEvent('domready', () => {
+    // new Welcome();
+    new Genius();
 });
+
+color = {
+    1: 'amarelo',
+    2: 'verde',
+    3: 'azul',
+    4: 'vermelho'
+};
 
 Welcome = new Class({
     Implements: Options,
@@ -9,15 +16,15 @@ Welcome = new Class({
 
     },
 
-    initialize: function(options) {
+    initialize(options) {
         this.setOptions(options);
         this.setElements();
-        setTimeout(function(){
+        setTimeout(() => {
             this.effect();
-        }.bind(this), 1000)
+        }, 1000)
     },
 
-    setElements: function(){
+    setElements(){
         this.hello = new Element('div', {
             'class': 'hello',
             'styles': {
@@ -34,7 +41,7 @@ Welcome = new Class({
         );
         this.hello.inject($$('body')[0]);
     },
-    effect: function(){
+    effect(){
         this.hello.addClass('active');
     }
 });
@@ -46,7 +53,7 @@ Genius = new Class({
 
     },
 
-    initialize: function(options){
+    initialize(options){
         this.setOptions(options);
         this.setElements();
         this.random();
@@ -57,24 +64,24 @@ Genius = new Class({
         this.error = false;
     },
 
-    random: function(){
-        this.math = parseInt(Math.random() * 10);
-        $$('.math').set('value', this.math);
+    random() {
+        this.math = parseInt(Math.random() * 4 + 1);
+        this.setNameColor();
     },
 
-    sequence: function(current, random){
+    sequence(current, random){
         this.random();
         this.round++;
         this.currentSequencia.push(current);
         this.randomSequence.push(random);
     },
 
-    clear: function(){
+    clear(){
         $('sequence').set('value', '');
         this.currentSequencia = [];
     },
 
-    press: function(){
+    press(){
         $('sequence').addEvent('keyup', function(ev){
             if(ev.key.match(/^([0-9])$/)) {
                 this.currentSequencia.push(ev.key);
@@ -82,7 +89,7 @@ Genius = new Class({
         }.bind(this));
     },
 
-    check: function(){
+    check(){
         for(let a = 0; a < this.randomSequence.length; a++) {
             if(this.randomSequence[a] === this.currentSequencia[a]){
                 this.error = false;
@@ -95,17 +102,16 @@ Genius = new Class({
         this.clear();
     },
 
-    setElements: function(){
+    setElements(){
 
         this.random();
 
         this.current = new Element('input', {
-            'class': 'math',
-            'value': this.math
+            'class': 'math'
         }).inject($$('body')[0], 'top');
 
         new Element('div', {
-            'class': 'math'
+            'class': 'textMath'
         }).inject($$('body')[0]);
 
         this.input = new Element('div').adopt(
@@ -120,25 +126,30 @@ Genius = new Class({
             new Element('button', {
                 'text': 'ok',
                 'events': {
-                    'click': function(){
+                    'click': () => {
                         this.sequence($('sequence').get('value'), $$('.math')[0].get('value'));
                         this.check();
-                    }.bind(this)
+                    }
                 }
             }),
-        )
+        );
 
         this.input.inject($$('body')[0]);
     },
 
-    restart: function(){
+    setNameColor() {
+        $$('.math').set('value', this.math);
+        $$('.textMath').set('text', color[this.math]);
+    },
+
+    restart(){
         this.currentSequencia = [];
         this.randomSequence = [];
         this.clear();
         this.content.dispose();
     },
 
-    gameOver: function(){
+    gameOver(){
         this.content = new Element('div').adopt(
             new Element('p', {
                 'text': 'Game Over'
@@ -147,9 +158,9 @@ Genius = new Class({
             new Element('button', {
                 'text': 'Reiniciar',
                 'events': {
-                    'click': function(){
+                    'click': () => {
                         this.restart();
-                    }.bind(this)
+                    }
                 }
             })
         );
