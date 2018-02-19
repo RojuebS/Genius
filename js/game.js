@@ -89,7 +89,9 @@ Genius = new Class({
     },
 
     buttons () {
-        this.contentButton = new Element('div', {'class': 'contentButtons'}).inject($$('body')[0]);
+        this.contentButton = new Element('div', {
+            'class': 'contentButtons'
+        }).inject($$('body')[0]);
         for(let item in color) {
             new Element('div', {
                 'id': item,
@@ -132,31 +134,32 @@ Genius = new Class({
 
     setElements() {
 
-        this.textround = new Element('div', {
-            'class': 'textRound'
-        }).inject($$('body')[0]);
-
-        this.current = new Element('input', {
-            'class': 'math',
-            'type': 'hidden'
-        }).inject($$('body')[0], 'top');
-
-        new Element('div', {
-            'class': 'textMath'
-        }).inject($$('body')[0]);
-
-        this.input = new Element('div').adopt(
-            new Element('p', {
-                'text': 'Digite a sequência'
+        this.grid = new Element('div').adopt(
+            new Element('div', {
+                'class': 'textRound'
             }),
 
             new Element('input', {
-                'id': 'sequence',
+                'class': 'math',
                 'type': 'hidden'
             }),
-        );
 
-        this.input.inject($$('body')[0]);
+            new Element('div', {
+                'class': 'textMath'
+            }),
+
+            new Element('div').adopt(
+                new Element('p', {
+                    'text': 'Digite a sequência'
+                }),
+
+                new Element('input', {
+                    'id': 'sequence',
+                    'type': 'hidden'
+                }),
+            )
+        );
+        this.grid.inject($$('body')[0]);
     },
 
     restart(){
@@ -164,9 +167,13 @@ Genius = new Class({
         this.randomSequence = [];
         this.clear();
         this.content.dispose();
+        this.round = 0;
+        this.settings();
+        this.contentButton.setStyle('pointer-events', 'auto');
     },
 
     gameOver(){
+        this.contentButton.setStyle('pointer-events', 'none');
         this.content = new Element('div').adopt(
             new Element('p', {
                 'text': 'Game Over'
