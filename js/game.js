@@ -94,7 +94,6 @@ Genius = new Class({
             new Element('div', {
                 'id': item,
                 'class': 'button ' + color[item],
-                'text': color[item],
                 'events': {
                     'click': () => {
                         let val = $('sequence').get('value');
