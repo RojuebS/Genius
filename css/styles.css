@@ -33,3 +33,33 @@ body {
 .hello.active {
     margin-top: -125px;
 }
+
+.contentButtons {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    border: 1px solid black;
+    margin: 20px 0 0 0;
+}
+
+.contentButtons .button {
+    width: calc(50% - 2px);
+    height: calc(50% - 2px);
+    float: left;
+}
+
+.contentButtons .button.amarelo {
+    background: yellow;
+}
+
+.contentButtons .button.vermelho {
+    background: red;
+}
+
+.contentButtons .button.azul {
+    background: blue;
+}
+
+.contentButtons .button.verde {
+    background: green;
+}

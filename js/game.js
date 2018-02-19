@@ -58,7 +58,7 @@ Genius = new Class({
         this.setElements();
         this.random();
         this.press();
-        this.round = 0;
+        this.round = 1;
         this.currentSequencia = [];
         this.randomSequence = [];
         this.error = false;
@@ -67,12 +67,19 @@ Genius = new Class({
 
     random() {
         this.math = parseInt(Math.random() * 4 + 1);
-        this.setNameColor();
+        this.settings();
+    },
+
+    settings() {
+        $$('.math').set('value', this.math);
+        $$('.textMath').set('text', color[this.math]);
+        if(typeof (this.round) !== 'undefined') {
+            $$('.textRound').set('text', 'Round: ' + this.round++);
+        }
     },
 
     sequence(current, random){
         this.random();
-        this.round++;
         this.randomSequence.push(random);
     },
 
@@ -84,15 +91,19 @@ Genius = new Class({
     buttons () {
         this.contentButton = new Element('div', {'class': 'contentButtons'}).inject($$('body')[0]);
         for(let item in color) {
-            console.log(item, color[item]);
             new Element('div', {
                 'id': item,
+                'class': 'button ' + color[item],
                 'text': color[item],
                 'events': {
                     'click': () => {
                         let val = $('sequence').get('value');
                         $('sequence').set('value', val+item);
                         this.currentSequencia.push(item);
+                        if(this.currentSequencia.length - 1 == this.randomSequence.length) {
+                            this.sequence($('sequence').get('value'), $$('.math')[0].get('value'));
+                            this.check();
+                        }
                     }
                 }
             }).inject(this.contentButton);
@@ -107,7 +118,7 @@ Genius = new Class({
         }.bind(this));
     },
 
-    check(){
+    check() {
         for(let a = 0; a < this.randomSequence.length; a++) {
             if(this.randomSequence[a] === this.currentSequencia[a]){
                 this.error = false;
@@ -122,8 +133,13 @@ Genius = new Class({
 
     setElements() {
 
+        this.textround = new Element('div', {
+            'class': 'textRound'
+        }).inject($$('body')[0]);
+
         this.current = new Element('input', {
-            'class': 'math'
+            'class': 'math',
+            'type': 'hidden'
         }).inject($$('body')[0], 'top');
 
         new Element('div', {
@@ -136,26 +152,12 @@ Genius = new Class({
             }),
 
             new Element('input', {
-                'id': 'sequence'
-            }),
-
-            new Element('button', {
-                'text': 'ok',
-                'events': {
-                    'click': () => {
-                        this.sequence($('sequence').get('value'), $$('.math')[0].get('value'));
-                        this.check();
-                    }
-                }
+                'id': 'sequence',
+                'type': 'hidden'
             }),
         );
 
         this.input.inject($$('body')[0]);
-    },
-
-    setNameColor() {
-        $$('.math').set('value', this.math);
-        $$('.textMath').set('text', color[this.math]);
     },
 
     restart(){
