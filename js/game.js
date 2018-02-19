@@ -62,6 +62,7 @@ Genius = new Class({
         this.currentSequencia = [];
         this.randomSequence = [];
         this.error = false;
+        this.buttons();
     },
 
     random() {
@@ -72,16 +73,33 @@ Genius = new Class({
     sequence(current, random){
         this.random();
         this.round++;
-        this.currentSequencia.push(current);
         this.randomSequence.push(random);
     },
 
-    clear(){
+    clear() {
         $('sequence').set('value', '');
         this.currentSequencia = [];
     },
 
-    press(){
+    buttons () {
+        this.contentButton = new Element('div', {'class': 'contentButtons'}).inject($$('body')[0]);
+        for(let item in color) {
+            console.log(item, color[item]);
+            new Element('div', {
+                'id': item,
+                'text': color[item],
+                'events': {
+                    'click': () => {
+                        let val = $('sequence').get('value');
+                        $('sequence').set('value', val+item);
+                        this.currentSequencia.push(item);
+                    }
+                }
+            }).inject(this.contentButton);
+        }
+    },
+
+    press() {
         $('sequence').addEvent('keyup', function(ev){
             if(ev.key.match(/^([0-9])$/)) {
                 this.currentSequencia.push(ev.key);
@@ -102,9 +120,7 @@ Genius = new Class({
         this.clear();
     },
 
-    setElements(){
-
-        this.random();
+    setElements() {
 
         this.current = new Element('input', {
             'class': 'math'
