@@ -61,7 +61,6 @@ Genius = new Class({
         this.currentSequencia = [];
         this.randomSequence = [];
         this.error = false;
-        this.buttons();
     },
 
     setElements() {
@@ -92,9 +91,30 @@ Genius = new Class({
             )
         );
         this.grid.inject($$('body')[0]);
+
+        this.contentButton = new Element('div', {
+            'class': 'contentButtons'
+        }).inject($$('body')[0]);
+        for(let item in color) {
+            new Element('div', {
+                'id': item,
+                'class': 'button ' + color[item],
+                'events': {
+                    'click': () => {
+                        let val = $('sequence').get('value');
+                        $('sequence').set('value', val+item);
+                        this.currentSequencia.push(item);
+                        if(this.currentSequencia.length - 1 == this.randomSequence.length) {
+                            this.sequence($('sequence').get('value'), $$('.math')[0].get('value'));
+                            this.check();
+                        }
+                    }
+                }
+            }).inject(this.contentButton);
+        }
     },
 
-    loadCurrentSequencia(){
+    loadCurrentSequencia() {
         let count = 1;
         this.randomSequence.each( (n, m) => {
             let interval = setTimeout( () => {
@@ -130,29 +150,6 @@ Genius = new Class({
         this.currentSequencia = [];
     },
 
-    buttons () {
-        this.contentButton = new Element('div', {
-            'class': 'contentButtons'
-        }).inject($$('body')[0]);
-        for(let item in color) {
-            new Element('div', {
-                'id': item,
-                'class': 'button ' + color[item],
-                'events': {
-                    'click': () => {
-                        let val = $('sequence').get('value');
-                        $('sequence').set('value', val+item);
-                        this.currentSequencia.push(item);
-                        if(this.currentSequencia.length - 1 == this.randomSequence.length) {
-                            this.sequence($('sequence').get('value'), $$('.math')[0].get('value'));
-                            this.check();
-                        }
-                    }
-                }
-            }).inject(this.contentButton);
-        }
-    },
-
     check() {
         this.error = false;
         for(let a = 0; a < this.randomSequence.length; a++) {
@@ -163,21 +160,25 @@ Genius = new Class({
 
         if(this.error === false) {
             this.clear();
-            this.loadCurrentSequencia();
+            this.start();
         }else{
             this.gameOver();
         }
 
     },
 
+    start() {
+        this.loadCurrentSequencia();
+    },
+
     restart(){
         this.currentSequencia = [];
         this.randomSequence = [];
-        this.clear();
         this.content.dispose();
         this.round = 0;
         this.settings();
         this.contentButton.setStyle('pointer-events', 'auto');
+        this.clear();
     },
 
     gameOver(){
