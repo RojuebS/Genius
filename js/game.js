@@ -57,12 +57,54 @@ Genius = new Class({
         this.setOptions(options);
         this.setElements();
         this.random();
-        this.press();
         this.round = 1;
         this.currentSequencia = [];
         this.randomSequence = [];
         this.error = false;
         this.buttons();
+    },
+
+    setElements() {
+
+        this.grid = new Element('div').adopt(
+            new Element('div', {
+                'class': 'textRound'
+            }),
+
+            new Element('input', {
+                'class': 'math',
+                'type': 'hidden'
+            }),
+
+            new Element('div', {
+                'class': 'textMath'
+            }),
+
+            new Element('div').adopt(
+                new Element('p', {
+                    'text': 'Digite a sequência'
+                }),
+
+                new Element('input', {
+                    'id': 'sequence',
+                    'type': 'hidden'
+                }),
+            )
+        );
+        this.grid.inject($$('body')[0]);
+    },
+
+    loadCurrentSequencia(){
+        let count = 1;
+        this.randomSequence.each( (n, m) => {
+            let interval = setTimeout( () => {
+                $$('.contentButtons div')[n - 1].addClass('active');
+            }, 1000 * count++);
+
+            setTimeout( () => {
+                $$('.contentButtons div')[n - 1].removeClass('active');
+            }, 1000 * count++);
+        });
     },
 
     random() {
@@ -111,55 +153,21 @@ Genius = new Class({
         }
     },
 
-    press() {
-        $('sequence').addEvent('keyup', function(ev){
-            if(ev.key.match(/^([0-9])$/)) {
-                this.currentSequencia.push(ev.key);
-            }
-        }.bind(this));
-    },
-
     check() {
+        this.error = false;
         for(let a = 0; a < this.randomSequence.length; a++) {
-            if(this.randomSequence[a] === this.currentSequencia[a]){
-                this.error = false;
-            }else{
-                this.gameOver();
-                return false;
+            if(this.randomSequence[a] !== this.currentSequencia[a]){
+                this.error = true;
             }
         }
 
-        this.clear();
-    },
+        if(this.error === false) {
+            this.clear();
+            this.loadCurrentSequencia();
+        }else{
+            this.gameOver();
+        }
 
-    setElements() {
-
-        this.grid = new Element('div').adopt(
-            new Element('div', {
-                'class': 'textRound'
-            }),
-
-            new Element('input', {
-                'class': 'math',
-                'type': 'hidden'
-            }),
-
-            new Element('div', {
-                'class': 'textMath'
-            }),
-
-            new Element('div').adopt(
-                new Element('p', {
-                    'text': 'Digite a sequência'
-                }),
-
-                new Element('input', {
-                    'id': 'sequence',
-                    'type': 'hidden'
-                }),
-            )
-        );
-        this.grid.inject($$('body')[0]);
     },
 
     restart(){

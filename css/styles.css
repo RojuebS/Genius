@@ -63,3 +63,7 @@ body {
 .contentButtons .button.verde {
     background: green;
 }
+
+.contentButtons .button.active {
+    opacity: 0.6;
+}
