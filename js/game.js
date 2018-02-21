@@ -58,14 +58,17 @@ Genius = new Class({
         this.setElements();
         this.random();
         this.round = 1;
-        this.currentSequencia = [];
+        this.elSequencia = [];
         this.randomSequence = [];
         this.error = false;
+        this.loadelSequencia();
     },
 
     setElements() {
 
-        this.grid = new Element('div').adopt(
+        this.grid = new Element('div', {
+
+        }).adopt(
             new Element('div', {
                 'class': 'textRound'
             }),
@@ -103,8 +106,8 @@ Genius = new Class({
                     'click': () => {
                         let val = $('sequence').get('value');
                         $('sequence').set('value', val+item);
-                        this.currentSequencia.push(item);
-                        if(this.currentSequencia.length - 1 == this.randomSequence.length) {
+                        this.elSequencia.push(item);
+                        if(this.elSequencia.length - 1 == this.randomSequence.length) {
                             this.sequence($('sequence').get('value'), $$('.math')[0].get('value'));
                             this.check();
                         }
@@ -114,10 +117,10 @@ Genius = new Class({
         }
     },
 
-    loadCurrentSequencia() {
+    loadelSequencia() {
         let count = 1;
         this.randomSequence.each( (n, m) => {
-            let interval = setTimeout( () => {
+            setTimeout( () => {
                 $$('.contentButtons div')[n - 1].addClass('active');
             }, 1000 * count++);
 
@@ -140,27 +143,27 @@ Genius = new Class({
         }
     },
 
-    sequence(current, random){
+    sequence(el, random){
         this.random();
         this.randomSequence.push(random);
     },
 
     clear() {
         $('sequence').set('value', '');
-        this.currentSequencia = [];
+        this.elSequencia = [];
     },
 
     check() {
         this.error = false;
         for(let a = 0; a < this.randomSequence.length; a++) {
-            if(this.randomSequence[a] !== this.currentSequencia[a]){
+            if(this.randomSequence[a] !== this.elSequencia[a]){
                 this.error = true;
             }
         }
 
         if(this.error === false) {
             this.clear();
-            this.start();
+            // this.start();
         }else{
             this.gameOver();
         }
@@ -168,11 +171,11 @@ Genius = new Class({
     },
 
     start() {
-        this.loadCurrentSequencia();
+        this.loadelSequencia();
     },
 
     restart(){
-        this.currentSequencia = [];
+        this.elSequencia = [];
         this.randomSequence = [];
         this.content.dispose();
         this.round = 0;
@@ -192,13 +195,12 @@ Genius = new Class({
                 'text': 'Reiniciar',
                 'events': {
                     'click': () => {
-                        this.restart();
+                        // this.restart();
                     }
                 }
             })
         );
 
         this.content.inject($$('body')[0]);
-    }
-
+    },
 });

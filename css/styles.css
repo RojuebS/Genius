@@ -4,7 +4,7 @@
 }
 
 body {
-    /*background: url('../images/Agrabah.jpg') no-repeat top center;*/
+    background: url('../images/Agrabah.jpg') no-repeat top center;
     height: 100%;
     background-size: cover
 }
@@ -38,8 +38,10 @@ body {
     width: 200px;
     height: 200px;
     border-radius: 100%;
-    border: 1px solid black;
-    margin: 20px 0 0 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -100px 0 0 -100px;
 }
 
 .contentButtons .button {
@@ -50,18 +52,22 @@ body {
 
 .contentButtons .button.amarelo {
     background: yellow;
+    border-top-left-radius: 100%;
 }
 
 .contentButtons .button.vermelho {
     background: red;
+    border-bottom-right-radius: 100%;
 }
 
 .contentButtons .button.azul {
     background: blue;
+    border-bottom-left-radius: 100%;
 }
 
 .contentButtons .button.verde {
     background: green;
+    border-top-right-radius: 100%;
 }
 
 .contentButtons .button.active {
