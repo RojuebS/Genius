@@ -121,11 +121,11 @@ Genius = new Class({
         this.currentRandom.each( (n, m) => {
             setTimeout( () => {
                 $$('.contentButtons div')[n - 1].addClass('active');
-            }, 1000 * count++);
+            }, 500 * count++);
 
             setTimeout( () => {
                 $$('.contentButtons div')[n - 1].removeClass('active');
-            }, 1000 * count++);
+            }, 500 * count++);
         });
     },
 
@@ -164,7 +164,6 @@ Genius = new Class({
 
         if(this.error === false) {
             this.clear();
-            // this.start();
         }else{
             this.gameOver();
         }
