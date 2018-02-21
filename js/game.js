@@ -79,14 +79,13 @@ Genius = new Class({
             }),
 
             new Element('div', {
-                'class': 'textMath'
+                'class': 'textMath',
+                'styles': {
+                    'display': 'none'
+                }
             }),
 
             new Element('div').adopt(
-                new Element('p', {
-                    'text': 'Digite a sequência'
-                }),
-
                 new Element('input', {
                     'id': 'sequence',
                     'type': 'hidden'
