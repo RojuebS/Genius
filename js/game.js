@@ -61,11 +61,11 @@ Genius = new Class({
         this.elSequencia = [];
         this.randomSequence = [];
         this.error = false;
-        this.loadelSequencia();
     },
 
     setElements() {
 
+        this.currentRandom = [];
         this.grid = new Element('div', {
 
         }).adopt(
@@ -119,7 +119,7 @@ Genius = new Class({
 
     loadelSequencia() {
         let count = 1;
-        this.randomSequence.each( (n, m) => {
+        this.currentRandom.each( (n, m) => {
             setTimeout( () => {
                 $$('.contentButtons div')[n - 1].addClass('active');
             }, 1000 * count++);
@@ -132,6 +132,7 @@ Genius = new Class({
 
     random() {
         this.math = parseInt(Math.random() * 4 + 1);
+        this.currentRandom.push(this.math);
         this.settings();
     },
 
@@ -141,6 +142,7 @@ Genius = new Class({
         if(typeof (this.round) !== 'undefined') {
             $$('.textRound').set('text', 'Round: ' + this.round++);
         }
+        this.loadelSequencia();
     },
 
     sequence(el, random){
@@ -195,7 +197,7 @@ Genius = new Class({
                 'text': 'Reiniciar',
                 'events': {
                     'click': () => {
-                        // this.restart();
+                        this.restart();
                     }
                 }
             })
